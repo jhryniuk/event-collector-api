@@ -1,0 +1,58 @@
+
+###> symfony/framework-bundle ###
+/app/api/.env.local
+/app/api/.env.local.php
+/app/api/.env.*.local
+/app/api/config/secrets/prod/prod.decrypt.private.php
+/app/api/public/bundles/
+/app/api/var/
+/app/api/vendor/
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/app/api/config/jwt/*.pem
+### < lexik/jwt-authentication-bundle ###
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/app/frontend/dist
+/app/frontend/tmp
+/app/frontend/out-tsc
+/app/frontend/bazel-out
+
+# Node
+/app/frontend/node_modules
+/app/frontend/.angular/
+/app/frontend/npm-debug.log
+/app/frontend/yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db

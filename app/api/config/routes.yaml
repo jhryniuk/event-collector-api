@@ -1,0 +1,15 @@
+#controllers:
+#    resource: ../src/Controller/
+#    type: attribute
+
+authenticated_user:
+    path: /api/authenticated_user
+    methods: POST
+    defaults:
+        _controller: App\Controller\AuthenticatedUserController::getUserByToken
+        _api_resource_class: App\Entity\User
+        _api_item_operation_name: post_publication
+
+authentication_token:
+    path: /authentication_token
+    methods: ['POST']
