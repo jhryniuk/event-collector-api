@@ -15,7 +15,6 @@ class User
         return [
             'id' => $this->user->getId(),
             'email' => $this->user->getEmail(),
-            'password' => $this->user->getPassword(),
             'roles' => $this->user->getRoles(),
             'identifier' => $this->user->getUserIdentifier()
         ];
