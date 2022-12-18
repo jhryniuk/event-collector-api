@@ -1,11 +1,25 @@
-<div>test</div>
-<div>
-  <form #form="ngForm">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="text" [(ngModel)]="login">
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" [(ngModel)]="password">
+<div class="card">
+  <div class="card-header">
+    <h3>Login</h3>
+  </div>
+  <div class="card-body">
+    <form #form="ngForm">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Email</span>
+        <input id="email" name="email" type="text" class="form-control" placeholder="email@mail.com" [(ngModel)]="login">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Password</span>
+        <input id="password" name="password" type="password" class="form-control" [(ngModel)]="password">
+      </div>
 
-    <input type="submit" (click)="submit()" value="Submit">
-  </form>
+      <div>
+        <a class="link" [routerLink]="['/register']">Register</a>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary" (click)="submit()">Login</button>
+      </div>
+    </form>
+  </div>
 </div>

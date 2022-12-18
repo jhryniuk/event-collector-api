@@ -12,7 +12,8 @@ export class EventService {
   }
 
   public list(token?: string, page?: number): Observable<IEvent[]> {
-    let headers = new HttpHeaders()
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
     headers = token ? headers.append('Authorization', `Bearer ${token}`) : headers;
 
     let params = new HttpParams({encoder: new UriEncoder()});

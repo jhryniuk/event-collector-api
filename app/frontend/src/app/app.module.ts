@@ -9,6 +9,8 @@ import { LoginModule } from "./login/login.module";
 import { HomeComponent } from "./home/home.component";
 import { EventComponent } from './event/event.component';
 import { UserComponent } from "./user/user.component";
+import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { UserComponent } from "./user/user.component";
     HomeComponent,
     EventComponent,
     UserComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import { UserComponent } from "./user/user.component";
     HttpClientModule,
     SharedModule,
     LoginModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

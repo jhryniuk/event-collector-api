@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
 #[ApiResource]
@@ -22,12 +23,16 @@ class Event
     #[ORM\JoinTable(name: 'event_owner')]
     #[ApiProperty]
     private Collection $owners;
-
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'assignedToEvents')]
     #[ORM\JoinTable(name: 'event_participant')]
     #[ApiProperty]
     private Collection $participants;
-
+    #[ORM\Column(type: 'text')]
+    private ?string $description = null;
+    #[ORM\Column]
+    private ?\DateTime $createdAt = null;
+    #[ORM\Column]
+    private ?\DateTime $updatedAt = null;
     public function __construct()
     {
         $this->owners = new ArrayCollection();
@@ -142,5 +147,35 @@ class Event
         if ($this->participants->contains($user)) {
             $this->participants->removeElement($user);
         }
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

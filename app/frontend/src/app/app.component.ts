@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
 import { AuthenticatedUserService } from "./shared/services/authenticated-user.service";
 
@@ -12,7 +13,8 @@ export class AppComponent {
 
   public constructor(
     public authService: AuthService,
-    public authenticatedUserService: AuthenticatedUserService
+    public authenticatedUserService: AuthenticatedUserService,
+    private router: Router,
   ) {
   }
 
