@@ -9,23 +9,39 @@ import { RegisterComponent } from './register/register.component';
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'events',
-    component: EventComponent
+    component: EventComponent,
+  },
+  {
+    path: 'events/:event',
+    component: EventComponent,
   },
   {
     path: 'users',
-    component: UserComponent
+    component: UserComponent,
+  },
+  {
+    path: 'users/:user',
+    component: UserComponent,
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+  },
+  {
+    path: 'errors',
+    loadChildren: () => import('./errors/errors.module').then(m => m.ErrorModule),
+  },
+  {
+    path: '**',
+    redirectTo: '/errors/not-found',
   }
 ];
 
@@ -33,4 +49,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}

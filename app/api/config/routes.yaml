@@ -10,6 +10,12 @@ authenticated_user:
         _api_resource_class: App\Entity\User
         _api_item_operation_name: post_publication
 
+security_role:
+    path: /security/roles
+    methods: GET
+    defaults:
+        _controller: App\Controller\SecureRoleController::getSecureRoles
+
 authentication_token:
     path: /authentication_token
     methods: ['POST']

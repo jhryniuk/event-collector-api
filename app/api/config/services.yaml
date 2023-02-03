@@ -25,3 +25,7 @@ services:
     App\OpenApi\JwtDecorator:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']
+
+    App\OpenApi\SecureRoleDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner']

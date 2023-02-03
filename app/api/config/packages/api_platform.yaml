@@ -1,5 +1,13 @@
 api_platform:
   version: 0.0.1
+  defaults:
+    pagination_enabled: true
+    pagination_client_enabled: true
+    pagination_client_items_per_page: true
+    pagination_client_partial: true
+    pagination_items_per_page: 30
+    pagination_maximum_items_per_page: 30
+    pagination_partial: true
   mapping:
     paths:
       - '%kernel.project_dir%/src/Entity'
@@ -8,6 +16,15 @@ api_platform:
   patch_formats:
     json:
       - 'application/merge-patch+json'
+  collection:
+    exists_parameter_name: 'exists'
+    order: 'ASC'
+    order_parameter_name: 'order'
+    pagination:
+      page_parameter_name: 'page'
+      enabled_parameter_name: 'pagination'
+      items_per_page_parameter_name: 'per_page'
+      partial_parameter_name: 'partial'
   swagger:
     versions: [3]
     api_keys:

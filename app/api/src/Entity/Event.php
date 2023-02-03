@@ -4,38 +4,57 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['event:read']],
+    denormalizationContext: ['groups' => ['event:write']]
+)]
 class Event
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
+    #[Groups('event:read')]
     private ?int $id = null;
     #[ORM\Column]
+    #[Groups(['event:read', 'event:write'])]
     private ?string $name = null;
     #[ORM\Column]
-    private ?\DateTime $dateTime = null;
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'eventsOwner')]
-    #[ORM\JoinTable(name: 'event_owner')]
+    #[Groups(['event:read', 'event:write'])]
+    private ?\DateTime $startDateTime = null;
+    #[ORM\Column]
+    #[Groups(['event:read', 'event:write'])]
+    private ?\DateTime $endDateTime = null;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'eventsOwner')]
+    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id')]
     #[ApiProperty]
-    private Collection $owners;
+    #[Groups(['event:read', 'event:write'])]
+    private User $owner;
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'assignedToEvents')]
     #[ORM\JoinTable(name: 'event_participant')]
     #[ApiProperty]
+    #[Groups(['event:read', 'event:write'])]
     private Collection $participants;
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['event:read', 'event:write'])]
     private ?string $description = null;
     #[ORM\Column]
+    #[Groups(['event:read'])]
     private ?\DateTime $createdAt = null;
     #[ORM\Column]
+    #[Groups(['event:read'])]
     private ?\DateTime $updatedAt = null;
+
+
+
     public function __construct()
     {
-        $this->owners = new ArrayCollection();
         $this->participants = new ArrayCollection();
     }
 
@@ -66,52 +85,49 @@ class Event
     /**
      * @return \DateTime|null
      */
-    public function getDateTime(): ?\DateTime
+    public function getStartDateTime(): ?\DateTime
     {
-        return $this->dateTime;
+        return $this->startDateTime;
     }
 
     /**
      * @param \DateTime|null $dateTime
      */
-    public function setDateTime(?\DateTime $dateTime): void
+    public function setStartDateTime(?\DateTime $dateTime): void
     {
-        $this->dateTime = $dateTime;
+        $this->startDateTime = $dateTime;
     }
 
     /**
-     * @return Collection
+     * @return \DateTime|null
      */
-    public function getOwners(): Collection
+    public function getEndDateTime(): ?\DateTime
     {
-        return $this->owners;
+        return $this->endDateTime;
     }
 
     /**
-     * @param array $owners
+     * @param \DateTime|null $dateTime
      */
-    public function setOwners(array $owners): void
+    public function setEndDateTime(?\DateTime $dateTime): void
     {
-        $this->owners->clear();
-        foreach ($owners as $owner) {
-            if (!$this->owners->contains($owner)) {
-                $this->owners->add($owner);
-            }
-        }
+        $this->endDateTime = $dateTime;
     }
 
-    public function addOwner(User $user): void
+    /**
+     * @return User
+     */
+    public function getOwner(): User
     {
-        if (!$this->owners->contains($user)) {
-            $this->owners->add($user);
-        }
+        return $this->owner;
     }
 
-    public function removeOwner(User $user): void
+    /**
+     * @param User $owner
+     */
+    public function setOwner(User $owner): void
     {
-        if ($this->owners->contains($user)) {
-            $this->owners->removeElement($user);
-        }
+        $this->owner = $owner;
     }
 
     /**

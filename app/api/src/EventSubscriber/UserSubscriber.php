@@ -28,7 +28,8 @@ final class UserSubscriber implements EventSubscriberInterface
     public function setPassword(ViewEvent $event)
     {
         $user = $event->getControllerResult();
-        if ($user instanceof User && $user->getPassword()) {
+        $content = json_decode($event->getRequest()->getContent(), true);
+        if ($user instanceof User && $user->getPassword() && $content && array_key_exists('password', $content)) {
             $password = $this->passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($password);
         }

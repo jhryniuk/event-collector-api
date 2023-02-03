@@ -4,6 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,43 +19,58 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['read']], denormalizationContext: ['groups' => ['write']])]
+#[ApiResource(
+    normalizationContext: ['groups' => ['user:read']],
+    denormalizationContext: ['groups' => ['user:write']],
+    security: "is_granted('ROLE_USER')"
+)]
+#[GetCollection]
+#[Get(security: "is_granted('USER_READ', object)")]
+#[Post]
+#[Put(security: "is_granted('USER_EDIT', object)")]
+#[Patch(security: "is_granted('USER_EDIT', object)")]
+#[Delete(security: "is_granted('USER_DELETE', object)")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read', 'user:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read', 'user:write'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read', 'user:write'])]
     private array $roles = [];
-    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'owners')]
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Event::class)]
     #[ApiProperty]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read', 'user:write'])]
     private Collection $eventsOwner;
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participants')]
     #[ApiProperty]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read', 'user:write'])]
     private Collection $assignedToEvents;
+
+    /**
+     * @var string|null $password The password
+     */
+    #[ORM\Column]
+    #[Groups('user:write')]
+    private ?string $password = null;
+
+    #[ORM\OneToOne(targetEntity: Image::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[ApiProperty]
+    #[Groups(['user:read', 'user:write'])]
+    private ?Image $image = null;
 
     public function __construct()
     {
         $this->eventsOwner = new ArrayCollection();
         $this->assignedToEvents = new ArrayCollection();
     }
-
-    /**
-     * @var string|null $password The password
-     */
-    #[ORM\Column]
-    #[Groups('write')]
-    private ?string $password = null;
-
 
     public function getId(): ?int
     {
@@ -125,14 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setEventsOwner(array $events): void
     {
-        /** @var Event $event */
-        foreach ($this->eventsOwner as $event) {
-            $event->removeOwner($this);
-        }
-        /** @var Event $event */
-        foreach ($events as $event) {
-            $event->addOwner($this);
-        }
+        $this->eventsOwner = $events;
     }
 
     /**
@@ -156,6 +170,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         foreach ($events as $event) {
             $event->addParticipant($this);
         }
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(Image $image): void
+    {
+        $this->image = $image;
     }
 
     /**

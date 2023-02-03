@@ -1,31 +1,137 @@
-<div class="d-flex flex-wrap">
-  <div class="col-sm-3 px-3" *ngFor="let event of events">
-    <div class="card">
-      <div class="card-header">
-        <h3>
-          {{event.name}}
-        </h3>
-      </div>
-      <div class="card-body">
-        <pre>
-          {{event | json}}
-        </pre>
-        <div>
-          {{event.name}}
+<div *ngIf="!createEvent && !eventId">
+  <button (click)="createEvent = true" class="btn btn-primary"><i class="bi bi-plus-lg"></i><span class="p-2">Add Event</span></button>
+  <div class="d-flex flex-wrap" *ngIf="!eventId">
+    <div class="col-sm-3 p-3" *ngFor="let event of events">
+      <div class="card pointer" routerLink="/events/{{event.id}}">
+        <div class="card-header">
+          <h3>
+            {{event.name}}
+          </h3>
         </div>
-        <div>
-          {{event.dateTime | date}}
-        </div>
-        <div>
-          {{event.owners | json}}
-        </div>
-        <div>
-          {{event.participants | json}}
-        </div>
-        <div>
-          {{event.description}}
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="w-50">
+              <strong>
+                Start Date:
+              </strong>
+            </div>
+            <div class="w-50">
+              {{event.startDateTime | date : 'dd.MM.yyyy'}}
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="w-50">
+              <strong>
+                Start Time:
+              </strong>
+            </div>
+            <div class="w-50">
+              {{event.startDateTime | date : 'hh:mm'}}
+            </div>
+          </div>
+          <div>
+            <strong>Description:</strong>
+          </div>
+          <div class="list-description">
+            {{event.description }}
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="createEvent && !eventId">
+  <button (click)="getEvents(); createEvent = false" class="btn btn-primary"><i class="bi bi-skip-backward"></i><span class="p-2">Back to list</span></button>
+  <form>
+    <div class="d-flex py-3">
+      <div class="w-25"><strong>Name</strong></div>
+      <div class="w-75"><input type="text" name="name" id="name" class="form-control" [(ngModel)]="newEvent.name"></div>
+    </div>
+    <div class="d-flex py-3">
+      <div class="w-25"><strong>Start Date</strong></div>
+      <div class="w-75">
+        <input
+          (click)="sd.toggle()"
+          type="text"
+          name="startDate"
+          id="startDate"
+          class="form-control"
+          [(ngModel)]="newStartDate"
+          ngbDatepicker
+          #sd="ngbDatepicker"
+          [readOnly]="true"
+        >
+      </div>
+    </div>
+    <div class="d-flex py-3">
+      <div class="w-25"><strong>Start Time</strong></div>
+      <div class="w-75">
+        <ngb-timepicker
+          name="startTime"
+          [(ngModel)]="newStartTime"
+        ></ngb-timepicker>
+      </div>
+    </div>
+    <div class="d-flex py-3">
+      <div class="w-25"><strong>End Date</strong></div>
+      <div class="w-75">
+        <input
+          (click)="ed.toggle()"
+          type="text"
+          name="endDate"
+          id="endDate"
+          class="form-control"
+          [(ngModel)]="newEndDate"
+          ngbDatepicker
+          #ed="ngbDatepicker"
+          [readOnly]="true"
+        >
+      </div>
+    </div>
+    <div class="d-flex py-3">
+      <div class="w-25"><strong>End Time</strong></div>
+      <div class="w-75">
+        <ngb-timepicker
+          name="endTime"
+          [(ngModel)]="newEndTime"
+        ></ngb-timepicker>
+      </div>
+    </div>
+    <div class="d-flex py-3">
+      <div class="w-25"><strong>Description</strong></div>
+      <div class="w-75"><textarea name="description" id="description" class="form-control" [(ngModel)]="newEvent.description"></textarea></div>
+    </div>
+    <button (click)="createNewEvent()" class="btn btn-primary"><i class="bi bi-check-lg"></i><span class="p-2">Create</span></button>
+  </form>
+</div>
+
+<div *ngIf="eventId">
+  <div class="d-flex">
+    <div class="w-25"><strong>Name</strong></div>
+    <div class="w-75">{{event.name}}</div>
+  </div>
+  <hr />
+  <div class="d-flex py-2">
+    <div class="w-25"><strong>Start Date</strong></div>
+    <div class="w-75"><input type="text" class="form-control" value="{{event.startDateTime | date : 'dd.MM.yyyy'}}" disabled="disabled" /></div>
+  </div>
+  <div class="d-flex py-2">
+    <div class="w-25"><strong>Start Time</strong></div>
+    <div class="w-75"><input type="text" class="form-control" value="{{event.startDateTime | date: 'hh:mm'}}" disabled="disabled" /></div>
+  </div>
+  <div class="d-flex py-2">
+    <div class="w-25"><strong>End Date</strong></div>
+    <div class="w-75"><input type="text" class="form-control" value="{{event.endDateTime | date : 'dd.MM.yyyy'}}" disabled="disabled" /></div>
+  </div>
+  <div class="d-flex py-2">
+    <div class="w-25"><strong>End Time</strong></div>
+    <div class="w-75"><input type="text" class="form-control" value="{{event.endDateTime | date: 'hh:mm'}}" disabled="disabled" /></div>
+  </div>
+  <div class="d-flex py-2">
+    <div class="w-25"><strong>Description</strong></div>
+    <div class="w-75"><textarea class="form-control" disabled="disabled">{{event.description}}</textarea></div>
+  </div>
+
+  <button class="btn btn-primary" (click)="addParticipant()" [disabled]="disableAddParticipant"><i class="bi bi-person-plus"></i><span class="p-2">Participate in</span></button>
 </div>

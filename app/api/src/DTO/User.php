@@ -16,7 +16,8 @@ class User
             'id' => $this->user->getId(),
             'email' => $this->user->getEmail(),
             'roles' => $this->user->getRoles(),
-            'identifier' => $this->user->getUserIdentifier()
+            'identifier' => $this->user->getUserIdentifier(),
+            'image' => $this->user->getImage()?->getId(),
         ];
     }
 
