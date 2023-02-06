@@ -1,6 +1,6 @@
 FROM php:8.1-fpm
 
-ARG USERID=1000
+ARG USERID
 
 RUN usermod -u $USERID www-data && \
     mkdir -p /var/www && \

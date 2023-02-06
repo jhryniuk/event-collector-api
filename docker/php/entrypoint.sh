@@ -7,6 +7,7 @@ function install {
   sleep 20s
   bin/console doctrine:schema:update --force
   bin/console doc:fix:load --purge-with-truncate -q
+  bin/console lexik:jwt:generate-keypair
   echo 'Installation successful'
 }
 
