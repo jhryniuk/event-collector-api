@@ -1,17 +1,18 @@
 #!/bin/bash
 
 cd /var/www
-#chmod 777 ./
-#ng new authapi --directory=./ --style=scss --routing
 
-#npm install
-#chmod 777 ./
-#npm audit fix
-#
-npm run-script start
+function install {
+  npm install --force
+  npm audit fix
+}
 
-#npm run-script build
-#chmod 777 -R dist
+function run {
+  npm run-script start
+}
 
-#echo "Cleaning project"
-#rm -rf node_modules
+if [ ! -d /var/www/node_modules ]; then
+  install
+fi
+
+run

@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      args:
+        USERID: 1001
     volumes:
       - web:/var/www/html
     networks:
@@ -30,6 +32,8 @@ services:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
+      args:
+        USERID: 1001
     volumes:
       - frontend:/var/www
     ports:
