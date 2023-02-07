@@ -21,10 +21,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['user:read']],
-    denormalizationContext: ['groups' => ['user:write']],
-    security: "is_granted('ROLE_USER')"
+    denormalizationContext: ['groups' => ['user:write']]
 )]
-#[GetCollection]
+#[GetCollection(security: "is_granted('ROLE_USER')")]
 #[Get(security: "is_granted('USER_READ', object)")]
 #[Post]
 #[Put(security: "is_granted('USER_EDIT', object)")]

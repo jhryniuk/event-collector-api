@@ -20,7 +20,7 @@ class UserVoter extends Voter
     }
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, ['USER_READ', 'USER_CREATE', 'USER_EDIT', 'USER_DELETE'])
+        return in_array($attribute, ['USER_READ', 'USER_EDIT', 'USER_DELETE'])
             && $subject instanceof \App\Entity\User;
     }
 
@@ -37,8 +37,6 @@ class UserVoter extends Voter
                     return true;
                 }
                 break;
-            case 'USER_CREATE':
-                return true;
             case 'USER_EDIT':
                 if ($this->security->isGranted('ROLE_ADMIN') || $user->getId() == $subject->getId()) {
                     return true;
