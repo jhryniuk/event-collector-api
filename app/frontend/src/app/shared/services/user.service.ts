@@ -11,8 +11,7 @@ export class UserService {
   }
 
   public list(token?: string, page?: number): Observable<IUser[]> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Accept', 'application/json');
+    let headers = new HttpHeaders().set('Accept', 'application/json');
     headers = token ? headers.append('Authorization', `Bearer ${token}`) : headers;
 
     let params = new HttpParams({encoder: new UriEncoder()});
@@ -22,14 +21,31 @@ export class UserService {
   }
 
   public get(token?: string, id?: number): Observable<IUser> {
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
+    let headers = new HttpHeaders().set('Accept', 'application/json');
     headers = token ? headers.append('Authorization', `Bearer ${token}`) : headers;
 
     return this.http.get<IUser>(`${environment.api_url}/api/users/${id}`, {headers});
   }
 
-  public post(user: IUser):Observable<IUser> {
-    return this.http.post<IUser>(`${environment.api_url}/api/users`, {email: user.email, password: user.password, roles: user.roles})
+  public post(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>(
+      `${environment.api_url}/api/users`,
+      {
+        email: user.email,
+        password: user.password,
+        roles: user.roles
+      }
+    );
+  }
+
+  public put(user: IUser, token?: string): Observable<IUser> {
+    let headers = new HttpHeaders().set('Accept', 'application/json');
+    headers = token ? headers.append('Authorization', `Bearer ${token}`): headers;
+
+    return this.http.put<IUser>(
+      `${environment.api_url}/api/users/${user.id}`,
+      user,
+      {headers}
+    );
   }
 }
