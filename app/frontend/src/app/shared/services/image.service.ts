@@ -27,4 +27,11 @@ export class ImageService {
 
     return this.http.get<IImage>(`${environment.api_url}/api/images/${id}`, {headers});
   }
+
+  public post(formData: FormData, token?: string): Observable<IImage> {
+    let headers = new HttpHeaders().set('Accept', 'application/json');
+    headers = token ? headers.append('Authorization', `Bearer ${token}`) : headers;
+
+    return this.http.post<IImage>(`${environment.api_url}/api/images`, formData, {headers});
+  }
 }

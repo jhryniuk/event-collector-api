@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class UserSubscriber implements EventSubscriberInterface
+final class UserPasswordSubscriber implements EventSubscriberInterface
 {
     private UserPasswordHasherInterface $passwordHasher;
 
