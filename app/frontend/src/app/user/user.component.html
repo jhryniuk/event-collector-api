@@ -14,8 +14,9 @@
   <button (click)="editMode = !editMode" class="btn btn-primary">Edit</button>
   <div class="d-flex py-2">
     <div class="w-25"><strong>Image</strong></div>
-    <div class="w-75" *ngIf="user.imageContent"><img [src]="url + user.imageContent.contentUrl" width="100" height="100"></div>
-    <div class="w-75" *ngIf="!user.imageContent"><img src="{{url}}/media/download.png" width="100" height="100"></div>
+    <div class="w-75" *ngIf="user.imageContent && !editMode"><img [src]="url + user.imageContent.contentUrl" width="100" height="100"></div>
+    <div class="w-75" *ngIf="!user.imageContent && !editMode"><img src="{{url}}/media/download.png" width="100" height="100"></div>
+    <div class="w75" *ngIf="editMode"><input type="file" (change)="onFileSelected($event)"></div>
   </div>
   <div class="d-flex">
     <div class="w-25"><strong>E-mail</strong></div>
@@ -28,11 +29,12 @@
     <div class="w-25"><strong>Roles</strong></div>
     <div class="w-75">
       <div *ngFor="let r of roles.roles | keyvalue">
-        <div><input class="form-check-inline" type="checkbox" [checked]="true"/> {{r.key}} {{r.value}}</div>
-      </div>
-      <div *ngFor="let role of user.roles">
-        {{role}}
+        <div>
+          <input class="form-check-inline" type="checkbox" [checked]="isRoleAssigned(user, r.key)" [disabled]="!editMode" (click)="toggleRole(r.key)" />
+            {{r.value}}
+        </div>
       </div>
     </div>
   </div>
+  <button (click)="submit(user)" class="btn btn-primary" [disabled]="!editMode">Submit</button>
 </div>

@@ -144,7 +144,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setEventsOwner(array $events): void
     {
-        $this->eventsOwner = $events;
+        if (!empty($events)) {
+            $this->eventsOwner = $events;
+        }
     }
 
     /**
@@ -160,13 +162,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setAssignedToEvents(array $events): void
     {
-        /** @var Event $event */
-        foreach ($this->assignedToEvents as $event) {
-            $event->removeParticipant($this);
-        }
-        /** @var Event $event */
-        foreach ($events as $event) {
-            $event->addParticipant($this);
+        if (!empty($events)) {
+            /** @var Event $event */
+            foreach ($this->assignedToEvents as $event) {
+                $event->removeParticipant($this);
+            }
+            /** @var Event $event */
+            foreach ($events as $event) {
+                $event->addParticipant($this);
+            }
         }
     }
 
