@@ -51,8 +51,6 @@ class Event
     #[Groups(['event:read'])]
     private ?\DateTime $updatedAt = null;
 
-
-
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -139,7 +137,7 @@ class Event
     }
 
     /**
-     * @param $participants[]
+     * @param $participants []
      */
     public function setParticipants(array $participants): void
     {

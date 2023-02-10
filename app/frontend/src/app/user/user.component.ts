@@ -8,6 +8,7 @@ import {IImage} from "../shared/model/image.model";
 import {environment} from "../../environments/environment";
 import {IRole} from "../shared/model/role.model";
 import {RoleService} from "../shared/services/role.service";
+import {AuthenticatedUserService} from "../shared/services/authenticated-user.service";
 
 @Component({
   selector: 'app-user',
@@ -28,7 +29,8 @@ export class UserComponent {
     private imageService: ImageService,
     private router: Router,
     private roleService: RoleService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public authenticatedUserService: AuthenticatedUserService
   ) {
     this.userId = parseInt(<string>this.activatedRoute.snapshot.paramMap.get('user'), 10);
   }

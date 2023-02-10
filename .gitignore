@@ -5,6 +5,8 @@
 /app/api/.env.*.local
 /app/api/config/secrets/prod/prod.decrypt.private.php
 /app/api/public/bundles/
+!/app/api/public/media/download.png
+/app/api/public/media/*
 /app/api/var/
 /app/api/vendor/
 ###< symfony/framework-bundle ###

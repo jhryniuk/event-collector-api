@@ -29,6 +29,19 @@ export class AuthenticatedUserService {
     return this.user;
   }
 
+  public isAdmin(): boolean {
+    if (typeof(this.user.roles) == 'undefined') {
+      return false;
+    } else {
+      return this.user.roles?.filter(
+        r =>
+          r == 'ROLE_ADMIN'
+          || r == 'ROLE_SUPER_ADMIN'
+          || r == 'ROLE_ALLOWED_TO_SWITCH'
+      ).length > 0;
+    }
+  }
+
   public unsetUser(): void {
     this.user = {} as IUser;
   }

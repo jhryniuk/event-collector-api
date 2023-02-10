@@ -5,6 +5,7 @@ namespace App\DTO;
 class User
 {
     private $user;
+
     public function __construct(\App\Entity\User $user)
     {
         $this->user = $user;
