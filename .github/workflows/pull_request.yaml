@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build docker
-        run: docker-compose up
+        run: docker-compose up -d
 
       - name: Lint backend
         run: docker-compose exec php composer -d /var/www/html/api run lint
