@@ -48,7 +48,7 @@ export class UserComponent {
       this.userService.get(this.authService.getToken(), this.userId).subscribe((user: IUser) => {
         this.user = user;
         if (this.user.image) {
-          let imageId = parseInt(this.user.image.split('/')[3], 10);
+          const imageId = parseInt(this.user.image.split('/')[3], 10);
           this.imageService.get(this.authService.getToken(), imageId).subscribe((image: IImage) => {
             this.user.imageContent = image;
           });
@@ -59,7 +59,7 @@ export class UserComponent {
 
   public isRoleAssigned(user: IUser, role: string): boolean {
     if (undefined != user.email) {
-      let result = user.roles.find(r => r === role);
+      const result = user.roles.find(r => r === role);
       if (undefined != result) {
         if (!this.selectedRoles.find(r => r === result)) {
           this.selectedRoles.push(result);
@@ -75,7 +75,7 @@ export class UserComponent {
   }
 
   public toggleRole(role: string): void {
-    let isAssigned = this.selectedRoles.find(r => r === role);
+    const isAssigned = this.selectedRoles.find(r => r === role);
     if (undefined == isAssigned) {
       this.selectedRoles.push(role);
     } else {

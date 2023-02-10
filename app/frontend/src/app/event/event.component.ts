@@ -47,7 +47,7 @@ export class EventComponent {
   }
 
   public addParticipant(): void {
-    let participants = this.event.participants;
+    const participants = this.event.participants;
     participants.push(`/api/users/${this.authenticatedUserService.getUser().id}`);
     this.event.participants = participants;
     this.eventService.put(this.event, this.authService.getToken()).subscribe((result) => {

@@ -1,0 +1,11 @@
+name: pull request
+
+on: [pull_request]
+
+jobs:
+  build:
+    run-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build docker
+        run: make up && make lint
