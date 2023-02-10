@@ -15,10 +15,10 @@ jobs:
         with:
           time: '60s'
 
+      - uses: actions/checkout@v2
       - name: Lint backend
-        uses: actions/checkout@v2
         run: docker-compose exec php composer -d /var/www/html/api run lint
 
+      - uses: actions/checkout@v2
       - name: Lint frontend
-        uses: actions/checkout@v2
         run: docker-compose exec node npm run lint
