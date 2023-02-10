@@ -19,6 +19,6 @@ class AuthenticatedUserController extends AbstractController
             return new JsonResponse((new User($tokenStorage->getToken()->getUser()))->toArray(), Response::HTTP_OK);
         }
 
-        return new JsonResponse([],Response::HTTP_OK);
+        return new JsonResponse([], Response::HTTP_OK);
     }
 }
