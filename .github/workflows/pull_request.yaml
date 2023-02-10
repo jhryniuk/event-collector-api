@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Build docker
         run: docker-compose up -d
 
@@ -16,7 +16,9 @@ jobs:
           time: '60s'
 
       - name: Lint backend
+        uses: actions/checkout@v2
         run: docker-compose exec php composer -d /var/www/html/api run lint
 
       - name: Lint frontend
+        uses: actions/checkout@v2
         run: docker-compose exec node npm run lint
