@@ -13,8 +13,8 @@ services:
       - default
     expose:
       - 9000
-    depends_on:
-      - db
+#    depends_on:
+#      - db
 
 #  nginx:
 #    image: nginx:1.23.2
