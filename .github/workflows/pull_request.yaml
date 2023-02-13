@@ -14,7 +14,7 @@ jobs:
         run: sleep 60
 
       - name: Lint backend
-        run: docker-compose exec php composer
+        run: docker exec api-with-frontend-php-1 composer
 
       - name: Lint frontend
         run: docker-compose exec node npm run lint
