@@ -6,7 +6,7 @@ build:
 
 install-backend:
 	@echo 'Install backend'
-	docker-compose exec -T php composer -d /var/www/html/api install
+	docker-compose exec -T php composer -d /var/www/html install
 	docker-compose exec -T php /var/www/html/bin/console doctrine:schema:update --force
 	docker-compose exec -T php /var/www/html/bin/console lexik:jwt:generate-keypair
 
