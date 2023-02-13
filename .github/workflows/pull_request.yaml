@@ -7,14 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
+      - name: Install make
+        run: sudo apt install -y make
+
       - name: Build docker
-        run: docker-compose up -d
+        run: make up
 
       - name: Sleep for 1 minute
         run: sleep 60
 
       - name: Lint backend
-        run: docker-compose exec -T php composer -d /var/www/html/api run lint
+        run: make lint-backend
 
       - name: Lint frontend
-        run: docker-compose exec -T node npm run lint
+        run: make lint-frontend
