@@ -14,8 +14,11 @@ jobs:
       - name: Build docker
         run: make up
 
+      - name: Install backend packages
+        run: make install
+
       - name: Sleep for 1 minute
-        run: sleep 60
+        run: sleep 15
 
       - name: Lint backend
         run: make lint-backend
