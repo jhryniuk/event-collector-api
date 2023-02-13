@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IUser} from "../shared/model/user.model";
 import {AuthService} from "../shared/services/auth.service";
@@ -15,7 +15,7 @@ import {AuthenticatedUserService} from "../shared/services/authenticated-user.se
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
   public userId?: number;
   public users: IUser[] = [];
   public user: IUser = {} as IUser;
@@ -48,7 +48,7 @@ export class UserComponent {
       this.userService.get(this.authService.getToken(), this.userId).subscribe((user: IUser) => {
         this.user = user;
         if (this.user.image) {
-          let imageId = parseInt(this.user.image.split('/')[3], 10);
+          const imageId = parseInt(this.user.image.split('/')[3], 10);
           this.imageService.get(this.authService.getToken(), imageId).subscribe((image: IImage) => {
             this.user.imageContent = image;
           });
@@ -59,7 +59,7 @@ export class UserComponent {
 
   public isRoleAssigned(user: IUser, role: string): boolean {
     if (undefined != user.email) {
-      let result = user.roles.find(r => r === role);
+      const result = user.roles.find(r => r === role);
       if (undefined != result) {
         if (!this.selectedRoles.find(r => r === result)) {
           this.selectedRoles.push(result);
@@ -75,7 +75,7 @@ export class UserComponent {
   }
 
   public toggleRole(role: string): void {
-    let isAssigned = this.selectedRoles.find(r => r === role);
+    const isAssigned = this.selectedRoles.find(r => r === role);
     if (undefined == isAssigned) {
       this.selectedRoles.push(role);
     } else {
@@ -99,15 +99,12 @@ export class UserComponent {
     const formData = new FormData();
     formData.append('file', file);
     this.imageService.post(formData, this.authService.getToken()).subscribe((image) => {
-      console.log(image);
       this.user.image = `/api/images/${image.id}`;
       this.userService.put(this.user, this.authService.getToken()).subscribe((user: IUser) => {
         this.user = user;
         this.editMode = false;
       });
     });
-
-    console.log(event.target.files[0]);
   }
 
   public ngOnInit(): void {

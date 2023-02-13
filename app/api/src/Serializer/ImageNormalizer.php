@@ -18,8 +18,11 @@ final class ImageNormalizer implements ContextAwareNormalizerInterface, Normaliz
     {
     }
 
-    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
-    {
+    public function normalize(
+        mixed $object,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         $context[self::ALREADY_CALLED] = true;
 
         $object->setContentUrl($this->storage->resolveUri($object));
