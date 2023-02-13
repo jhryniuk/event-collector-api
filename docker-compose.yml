@@ -64,7 +64,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/app
+      device: $PWD/app/api
       o: bind
   frontend:
     driver: local

@@ -49,7 +49,7 @@ COPY docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY docker/php/entrypoint.sh /entrypoint.sh
 
 VOLUME /var/www
-WORKDIR /var/www
+WORKDIR /var/www/html
 USER www-data
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

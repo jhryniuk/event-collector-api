@@ -6,9 +6,9 @@ build:
 
 install-backend:
 	@echo 'Install backend'
-	docker-compose exec -T php composer -d /var/www/html/api install
-	docker-compose exec -T php /var/www/html/api/bin/console doctrine:schema:update --force
-	docker-compose exec -T php /var/www/html/api/bin/console lexik:jwt:generate-keypair
+	docker-compose exec -T php composer -d /var/www/html install
+	docker-compose exec -T php /var/www/html/bin/console doctrine:schema:update --force
+	docker-compose exec -T php /var/www/html/bin/console lexik:jwt:generate-keypair
 
 install: install-backend
 
@@ -22,7 +22,7 @@ down:
 
 lint-backend:
 	@echo 'Run backend lint'
-	docker-compose exec -T php composer -d /var/www/html/api run lint
+	docker-compose exec -T php composer -d /var/www/html run lint
 
 lint-frontend:
 	@echo 'Run frontend lint'
