@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import { AuthService } from "../shared/services/auth.service";
 import { EventService } from "../shared/services/event.service";
 import { IEvent } from "../shared/model/event.model";
@@ -12,7 +12,7 @@ import {ToastService} from "../shared/services/toast-service";
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.scss'],
 })
-export class EventComponent {
+export class EventComponent implements OnInit {
   public events: IEvent[] = [];
   public eventId?: number;
   public event: IEvent = {} as IEvent;
@@ -39,7 +39,7 @@ export class EventComponent {
     this.newEvent.startDateTime = new Date(this.newStartDate.year,this.newStartDate.month - 1 ,this.newStartDate.day, this.newStartTime.hour, this.newStartTime.minute);
     this.newEvent.endDateTime = new Date(this.newEndDate.year, this.newEndDate.month - 1, this.newEndDate.day, this.newEndTime.hour, this.newEndTime.minute);
     this.newEvent.owner = `/api/users/${this.authenticatedUserService.getUser().id}`;
-    this.eventService.post(this.newEvent, this.authService.getToken()).subscribe((result) => {
+    this.eventService.post(this.newEvent, this.authService.getToken()).subscribe(() => {
       this.toastService.show('Event has been created', {classname: 'bg-success text-light', delay: 3000});
       this.getEvents();
       this.createEvent = false;
@@ -50,7 +50,7 @@ export class EventComponent {
     const participants = this.event.participants;
     participants.push(`/api/users/${this.authenticatedUserService.getUser().id}`);
     this.event.participants = participants;
-    this.eventService.put(this.event, this.authService.getToken()).subscribe((result) => {
+    this.eventService.put(this.event, this.authService.getToken()).subscribe(() => {
       this.toastService.show('Your participation has been added', {classname: 'bg-success text-light', delay: 3000})
     });
   }

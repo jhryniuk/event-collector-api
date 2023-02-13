@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IUser} from "../shared/model/user.model";
 import {AuthService} from "../shared/services/auth.service";
@@ -15,7 +15,7 @@ import {AuthenticatedUserService} from "../shared/services/authenticated-user.se
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
   public userId?: number;
   public users: IUser[] = [];
   public user: IUser = {} as IUser;
@@ -94,7 +94,7 @@ export class UserComponent {
     });
   }
 
-  public onFileSelected(event: any) {
+  public onFileSelected(event: unknown) {
     const file: File = event.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
