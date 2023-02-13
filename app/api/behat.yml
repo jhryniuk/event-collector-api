@@ -1,0 +1,12 @@
+default:
+  suites:
+    default:
+      filters:
+        tags: ~@wip
+
+  extensions:
+    Imbo\BehatApiExtension:
+      apiClient:
+        base_uri: http://localhost
+        timeout: 5.0
+        verify: false
