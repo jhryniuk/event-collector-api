@@ -20,7 +20,7 @@ export class AppComponent {
   ) {
   }
 
-  public isTemplate(toast: unknown) {
+  public isTemplate(toast: any) {
     return toast.textOrTpl instanceof TemplateRef;
   }
 

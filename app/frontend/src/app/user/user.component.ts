@@ -94,20 +94,17 @@ export class UserComponent implements OnInit {
     });
   }
 
-  public onFileSelected(event: unknown) {
+  public onFileSelected(event: any) {
     const file: File = event.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
     this.imageService.post(formData, this.authService.getToken()).subscribe((image) => {
-      console.log(image);
       this.user.image = `/api/images/${image.id}`;
       this.userService.put(this.user, this.authService.getToken()).subscribe((user: IUser) => {
         this.user = user;
         this.editMode = false;
       });
     });
-
-    console.log(event.target.files[0]);
   }
 
   public ngOnInit(): void {
