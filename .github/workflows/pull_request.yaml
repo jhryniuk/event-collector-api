@@ -16,5 +16,5 @@ jobs:
       - name: Lint backend
         run: docker-compose exec -T php composer -d /var/www/html/api run lint
 
-#      - name: Lint frontend
-#        run: docker-compose exec node ls -alh
+      - name: Lint frontend
+        run: docker-compose exec -T node npm run lint
