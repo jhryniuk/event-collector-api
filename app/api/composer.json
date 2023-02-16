@@ -90,6 +90,7 @@
         }
     },
     "require-dev": {
+        "friends-of-behat/symfony-extension": "^2.4",
         "imbo/behat-api-extension": "^3.0",
         "squizlabs/php_codesniffer": "^3.7",
         "symfony/maker-bundle": "^1.48"

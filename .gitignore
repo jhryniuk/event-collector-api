@@ -1,5 +1,5 @@
-
 ###> symfony/framework-bundle ###
+/app/api/.env
 /app/api/.env.local
 /app/api/.env.local.php
 /app/api/.env.*.local

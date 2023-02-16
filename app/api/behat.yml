@@ -1,12 +1,24 @@
 default:
-  suites:
-    default:
-      filters:
-        tags: ~@wip
+  formatters:
+    pretty: true
+    progress: true
 
   extensions:
     Imbo\BehatApiExtension:
       apiClient:
-        base_uri: http://localhost
+        base_uri: http://nginx-test
         timeout: 5.0
         verify: false
+    FriendsOfBehat\SymfonyExtension:
+      kernel:
+        debug: true
+        environment: test
+
+  suites:
+    user:
+      paths:
+        - '%paths.base%/features/user'
+      contexts:
+        - App\Behat\UserContext
+      filters:
+        tags: "~@wip"
