@@ -4,8 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,6 +21,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     normalizationContext: ['groups' => ['event:read']],
     denormalizationContext: ['groups' => ['event:write']]
 )]
+#[GetCollection(security: "is_granted('EVENT', object)")]
+#[Get(security: "is_granted('EVENT', object)")]
+#[Post(security: "is_granted('EVENT', object)")]
+#[Put(security: "is_granted('EVENT', object)")]
+#[Patch(security: "is_granted('EVENT', object)")]
+#[Delete(security: "is_granted('EVENT', object)")]
 class Event
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]

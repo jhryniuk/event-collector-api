@@ -22,3 +22,10 @@ default:
         - App\Behat\UserContext
       filters:
         tags: "~@wip"
+    event:
+      paths:
+        - '%paths.base%/features/event'
+      contexts:
+        - App\Behat\EventContext
+      filters:
+        tags: "~@wip"

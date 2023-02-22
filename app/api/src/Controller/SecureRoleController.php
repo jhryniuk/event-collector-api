@@ -17,7 +17,6 @@ class SecureRoleController extends AbstractController
             $response[$key] = ucwords(str_replace('_', ' ', $key));
         }
 
-
         foreach ($this->getParameter('security.role_hierarchy.roles') as $roleKey) {
             foreach ($roleKey as $role) {
                 if (!array_key_exists($role, $response)) {

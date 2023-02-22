@@ -11,6 +11,7 @@ build-test:
 install-backend:
 	@echo 'Install backend'
 	docker-compose exec -T php composer -d /var/www/html install
+	docker-compose exec -T php /var/www/html/bin/console doctrine:database:create --if-not-exists
 	docker-compose exec -T php /var/www/html/bin/console doctrine:schema:update --force
 	docker-compose exec -T php /var/www/html/bin/console lexik:jwt:generate-keypair
 
@@ -41,11 +42,11 @@ down-test:
 
 lint-backend:
 	@echo 'Run backend lint'
-	docker-compose exec -T php composer -d /var/www/html run lint
+	docker-compose -f docker-compose-test.yml exec -T php-test composer -d /var/www/html run lint
 
 lint-frontend:
 	@echo 'Run frontend lint'
-	docker-compose exec -T node npm run lint
+	docker-compose -f docker-compose-test.yml exec -T node-test npm run lint
 
 lint: lint-frontend lint-backend
 

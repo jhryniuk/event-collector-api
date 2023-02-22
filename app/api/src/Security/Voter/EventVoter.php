@@ -8,15 +8,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserVoter extends Voter
+class EventVoter extends Voter
 {
     private $security = null;
     private $kernel = null;
 
-    /**
-     * @param Security $security
-     * @param KernelInterface $kernel
-     */
     public function __construct(Security $security, KernelInterface $kernel)
     {
         $this->security = $security;
@@ -24,8 +20,7 @@ class UserVoter extends Voter
     }
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return (in_array($attribute, ['USER_READ', 'USER_EDIT', 'USER_DELETE'])
-            && $subject instanceof \App\Entity\User) || $this->kernel->getEnvironment() === 'test';
+        return in_array($attribute, ['EVENT']) || $this->kernel->getEnvironment() === 'test';
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -39,22 +34,8 @@ class UserVoter extends Voter
             return false;
         }
 
-        switch ($attribute) {
-            case 'USER_READ':
-                if ($this->security->isGranted('ROLE_DOCTOR') || $user->getId() == $subject->getId()) {
-                    return true;
-                }
-                break;
-            case 'USER_EDIT':
-                if ($this->security->isGranted('ROLE_ADMIN') || $user->getId() == $subject->getId()) {
-                    return true;
-                }
-                break;
-            case 'USER_DELETE':
-                if ($this->security->isGranted('ROLE_ADMIN')) {
-                    return true;
-                }
-                break;
+        if ($attribute === 'EVENT' && $this->security->isGranted('ROLE_USER')) {
+            return true;
         }
 
         return false;
