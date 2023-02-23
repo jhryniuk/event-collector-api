@@ -19,7 +19,7 @@ services:
       APP_ENV: 'dev'
       APP_SECRET: '0f4e9fce56a0fac70f6391e974def300'
       DATABASE_URL: "mysql://root:toor@db:3306/authapi?serverVersion=8&charset=utf8mb4"
-      CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+#      CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
       JWT_SECRET_KEY: '%kernel.project_dir%/config/jwt/private.pem'
       JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
       JWT_PASSPHRASE: '07efb81710088b3834ad4ff0f0668bf6'
