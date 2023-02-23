@@ -35,8 +35,7 @@ class ImageVoter extends Voter
             return false;
         }
 
-        if ($attribute === 'IMAGE' && $this->security->isGranted('ROLE_USER'))
-        {
+        if ($attribute === 'IMAGE' && $this->security->isGranted('ROLE_USER')) {
             return true;
         }
 
