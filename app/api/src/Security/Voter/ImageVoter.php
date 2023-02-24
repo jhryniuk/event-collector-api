@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security\Voter;
 
-use App\Entity\Image;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ImageVoter extends Voter
 {
-    private $security = null;
-    private $kernel = null;
+    private Security $security;
+    private KernelInterface $kernel ;
 
     public function __construct(Security $security, KernelInterface $kernel)
     {

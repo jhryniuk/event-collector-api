@@ -2,21 +2,18 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\User;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserVoter extends Voter
 {
-    private $security = null;
-    private $kernel = null;
+    private Security $security;
+    private KernelInterface $kernel;
 
-    /**
-     * @param Security $security
-     * @param KernelInterface $kernel
-     */
     public function __construct(Security $security, KernelInterface $kernel)
     {
         $this->security = $security;
@@ -25,12 +22,12 @@ class UserVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         return (in_array($attribute, ['USER_READ', 'USER_EDIT', 'USER_DELETE'])
-            && $subject instanceof \App\Entity\User) || $this->kernel->getEnvironment() === 'test';
+            && $subject instanceof User) || 'test' === $this->kernel->getEnvironment();
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        if ($this->kernel->getEnvironment() === 'test') {
+        if ('test' === $this->kernel->getEnvironment()) {
             return true;
         }
 

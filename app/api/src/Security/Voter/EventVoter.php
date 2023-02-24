@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security\Voter;
 
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class EventVoter extends Voter
 {
-    private $security = null;
-    private $kernel = null;
+    private Security $security;
+    private KernelInterface $kernel;
 
     public function __construct(Security $security, KernelInterface $kernel)
     {
@@ -25,7 +27,7 @@ class EventVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        if ($this->kernel->getEnvironment() === 'test') {
+        if ('test' === $this->kernel->getEnvironment()) {
             return true;
         }
 
