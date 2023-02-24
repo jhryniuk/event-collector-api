@@ -22,7 +22,7 @@ class EventVoter extends Voter
     }
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, ['EVENT']) || $this->kernel->getEnvironment() === 'test';
+        return in_array($attribute, ['EVENT']) || 'test' === $this->kernel->getEnvironment();
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

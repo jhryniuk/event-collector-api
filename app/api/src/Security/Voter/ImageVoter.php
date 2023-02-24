@@ -22,12 +22,12 @@ class ImageVoter extends Voter
     }
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, ['IMAGE']) || $this->kernel->getEnvironment() === 'test';
+        return in_array($attribute, ['IMAGE']) || 'test' === $this->kernel->getEnvironment();
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        if ($this->kernel->getEnvironment() === 'test') {
+        if ('test' === $this->kernel->getEnvironment()) {
             return true;
         }
 
@@ -36,7 +36,7 @@ class ImageVoter extends Voter
             return false;
         }
 
-        if ($attribute === 'IMAGE' && $this->security->isGranted('ROLE_USER')) {
+        if ('IMAGE' === $attribute && $this->security->isGranted('ROLE_USER')) {
             return true;
         }
 
