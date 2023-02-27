@@ -24,6 +24,7 @@ RUN apt-get -qq update --fix-missing \
         zip \
         unzip \
         git-core \
+        curl \
     && docker-php-ext-install zip
 
 COPY docker/php/docker-php-pecl-install /usr/local/bin/

@@ -144,8 +144,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setEventsOwner(array $events): void
     {
-        if (!empty($events)) {
-            $this->eventsOwner = $events;
+        if (empty($events)) {
+            return;
+        }
+
+        foreach ($events as $event) {
+            $this->eventsOwner->add($event);
         }
     }
 

@@ -20,9 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     types: ['https://schema.org/MediaObject'],
     operations: [
-        new Delete(),
-        new Get(),
-        new GetCollection(),
+        new Delete(security: "is_granted('IMAGE', object)"),
+        new Get(security: "is_granted('IMAGE', object)"),
+        new GetCollection(security: "is_granted('IMAGE', object)"),
         new Post(
             controller: CreateImageAction::class,
             openapiContext: [
@@ -42,6 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                     ]
                 ]
             ],
+            security: "is_granted('IMAGE', object)",
             validationContext: ['groups' => ['Default', 'image_create']],
             deserialize: false
         )
