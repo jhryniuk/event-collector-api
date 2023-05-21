@@ -6,7 +6,7 @@ default:
   extensions:
     Imbo\BehatApiExtension:
       apiClient:
-        base_uri: http://nginx-test
+        base_uri: http://nginx
         timeout: 5.0
         verify: false
     FriendsOfBehat\SymfonyExtension:

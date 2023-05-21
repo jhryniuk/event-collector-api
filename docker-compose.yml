@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
       args:
-        USERID: 1001
+        USERID: 1000
     volumes:
       - web:/var/www/html
     networks:
@@ -35,19 +35,6 @@ services:
       - default
     depends_on:
       - php
-
-  node:
-    build:
-      context: .
-      dockerfile: docker/node/Dockerfile
-      args:
-        USERID: 1001
-    volumes:
-      - frontend:/var/www
-    ports:
-      - 4200:4200
-    networks:
-      - default
 
   db:
     image: mariadb:10.9.4
